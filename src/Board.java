@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class Board {
     private int size;
     private char boardState[][];
-    private char resetChar;
+    private char resetChar = ' ';
 
     // is used as "null" char when resetting a pos in board state matrix
     private ArrayList<Queen> queens;
@@ -13,6 +13,7 @@ public class Board {
     public Board(int size) {
         this.size = size;
         this.boardState = new char[size][size];
+        restBoardState();
         this.queens = new ArrayList<>();
     }
 
@@ -21,6 +22,14 @@ public class Board {
         return (queen.getyPos() < size && queen.getxPos() < size);
     }
 
+    private void restBoardState(){
+        for (int i = 0; i < size; i++) {
+            for (int s = 0; s < size; s++) {
+                boardState[i][s] = ' ';
+            }
+        }
+
+    }
 
     public boolean placeQueen(Queen queen) {
 
@@ -95,7 +104,6 @@ public class Board {
 
         for (char[] row : boardState) {
             builder.append(Arrays.toString(row)).append("\n");
-
         }
         builder.deleteCharAt(builder.length() - 1);
         return builder.toString();
