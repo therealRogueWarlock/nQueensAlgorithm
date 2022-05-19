@@ -3,14 +3,16 @@
 public class Main {
 
     public static boolean savePath = true;
-    public static boolean saveBacktrackPath = false;
+    public static boolean saveBacktrackPath = true;
     public static boolean oneSolution = false;
+    public static int solutionCounter = 0;
 
     public static void main(String[] args) {
 
         Board newBoard = new Board(6);
         nQueenAlgorithm(newBoard, new Queen(0, 0));
         PathSaver.printAllSavedPaths();
+        System.out.println("Solutions found: " + solutionCounter);
     }
 
 
@@ -18,15 +20,19 @@ public class Main {
 
         // solution reached when the last queen is placed
         if (queen.getyPos() >= board.getSize()) {
+
             // a solution is found !
-            if (oneSolution){
+            solutionCounter++;
+
+            // if it did not save the path as it was solving, save last board state
+            if (!savePath){
                 PathSaver.addBoardStateToSolution(board.getBoardSnapShot());
             }
 
             PathSaver.markPathAsSolution();
             PathSaver.savePath();
             if(oneSolution) return true;
-            //System.out.println("solution found");
+
         }
 
         // check if the queens position is on the board.
